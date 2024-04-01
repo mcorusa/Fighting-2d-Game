@@ -34,7 +34,7 @@ const shop = new Sprite({
 
 const player = new Fighter({
   position: {
-    x: 0,
+    x: 200,
     y: 0,
   },
   velocity: {
@@ -94,7 +94,7 @@ const player = new Fighter({
 
 const enemy = new Fighter({
   position: {
-    x: 400,
+    x: 700,
     y: 100,
   },
   velocity: {
@@ -178,16 +178,35 @@ const keys = {
 
 decreaseTimer();
 
+//*************************************************************/
+function playerRestrictions(character) {
+  if (character.position.x < 0) {
+    character.position.x = 0;
+  } else if (character.position.x + character.width > canvas.width) {
+    character.position.x = canvas.width - character.width;
+  }
+
+  if (character.position.y < -145) {
+    character.position.y = -145;
+  }
+}
+
+//*************************************************************/
+
 function animate() {
   window.requestAnimationFrame(animate);
   c.fillStyle = "black";
   c.fillRect(0, 0, canvas.width, canvas.height);
   background.update();
   shop.update();
-  c.fillStyle = 'rgba(255, 255, 255, .15)'
+  c.fillStyle = "rgba(255, 255, 255, .15)";
   c.fillRect(0, 0, canvas.width, canvas.height);
   player.update();
   enemy.update();
+
+  playerRestrictions(player);
+  playerRestrictions(enemy);
+
   player.velocity.x = 0;
   enemy.velocity.x = 0;
 
@@ -242,9 +261,9 @@ function animate() {
     //enemy.health -= 20;
     //enemy.health -= 10;
     //document.querySelector("#enemyHealth").style.width = `${enemy.health}%`;
-    gsap.to('#enemyHealth', {
-        width:`${enemy.health}%`
-    })
+    gsap.to("#enemyHealth", {
+      width: `${enemy.health}%`,
+    });
     console.log("player go");
   }
   // if player misses
@@ -265,9 +284,9 @@ function animate() {
     player.takeHit();
     enemy.isAttacking = false;
     //document.querySelector("#playerHealth").style.width = `${player.health}%`;
-    gsap.to('#playerHealth', {
-        width:`${player.health}%`
-    })
+    gsap.to("#playerHealth", {
+      width: `${player.health}%`,
+    });
     console.log("enemy attack successfull");
   }
 
