@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Game</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="health-bar">
+        <div class="parent parent-p">
+          <div class="health"></div>
+          <div id="playerHealth" class="playerHealth"></div>
+        </div>
+
+        <div class="timer" id="timer"></div>
+
+        <div class="parent parent-e">
+          <div class="health"></div>
+          <div id="enemyHealth" class="enemyHealth"></div>
+        </div>
+      </div>
+      <div class="result" id="result">Tie</div>
+      <canvas></canvas>
+    </div>
+  </body>
+</html>
+
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
+  integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
+<script src="js/utils.js"></script>
+<script src="js/classes.js"></script>
+<script src="index.js"></script>
