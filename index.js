@@ -320,6 +320,7 @@ window.addEventListener("keydown", (event) => {
         player.lastKey = "a";
         break;
       case "w":
+        if (player.position.y + player.height >= canvas.height - 96)
         player.velocity.y = -20;
         break;
       case " ":
@@ -339,6 +340,7 @@ window.addEventListener("keydown", (event) => {
         enemy.lastKey = "ArrowLeft";
         break;
       case "ArrowUp":
+        if (enemy.position.y + enemy.height >= canvas.height - 96)
         enemy.velocity.y = -20;
         break;
       case "ArrowDown":
