@@ -330,7 +330,7 @@ window.addEventListener("keydown", (event) => {
           player.velocity.y = -20;
           playJumpSound();
         break;
-      case " ":
+      case "s":
         player.attack();
         playAttackSound();
         break;
