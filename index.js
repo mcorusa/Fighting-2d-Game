@@ -154,9 +154,7 @@ const enemy = new Fighter({
   dead: false,
 });
 
-
 //playFightSound();
-// kad imamo objekte koji ce se pomjerati onda obicno za svojstvo dodamo velocity i gravity (idemo napraviti funkciju animate)
 
 const keys = {
   a: {
@@ -195,9 +193,6 @@ function playerRestrictions(character) {
 }
 
 //*************************************************************/
-
-
-
 
 function animate() {
   window.requestAnimationFrame(animate);
@@ -307,7 +302,6 @@ function animate() {
   }
 }
 
-// beskonacna petlja funkcija poziva samu sebe
 animate();
 
 // 3. Move Characters with Event Listeners
@@ -328,7 +322,7 @@ window.addEventListener("keydown", (event) => {
       case "w":
         if (player.position.y + player.height >= canvas.height - 96)
           player.velocity.y = -20;
-          playJumpSound();
+        playJumpSound();
         break;
       case "s":
         player.attack();
@@ -350,7 +344,7 @@ window.addEventListener("keydown", (event) => {
       case "ArrowUp":
         if (enemy.position.y + enemy.height >= canvas.height - 96)
           enemy.velocity.y = -20;
-          playJumpSound();
+        playJumpSound();
         break;
       case "ArrowDown":
         //enemy.isAttacking = true;
@@ -426,7 +420,3 @@ function resetGame() {
 }
 
 document.getElementById("btn").addEventListener("click", resetGame);
-
-
-
-
