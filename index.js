@@ -89,7 +89,7 @@ const player = new Fighter({
     width: 155,
     height: 50,
   },
-  dead : false
+  dead: false,
 });
 
 const enemy = new Fighter({
@@ -151,9 +151,11 @@ const enemy = new Fighter({
     width: 170,
     height: 50,
   },
-  dead : false
+  dead: false,
 });
 
+
+//playFightSound();
 // kad imamo objekte koji ce se pomjerati onda obicno za svojstvo dodamo velocity i gravity (idemo napraviti funkciju animate)
 
 const keys = {
@@ -194,6 +196,9 @@ function playerRestrictions(character) {
 
 //*************************************************************/
 
+
+
+
 function animate() {
   window.requestAnimationFrame(animate);
   c.fillStyle = "black";
@@ -202,6 +207,7 @@ function animate() {
   shop.update();
   c.fillStyle = "rgba(255, 255, 255, .15)";
   c.fillRect(0, 0, canvas.width, canvas.height);
+
   player.update();
   enemy.update();
 
@@ -321,10 +327,12 @@ window.addEventListener("keydown", (event) => {
         break;
       case "w":
         if (player.position.y + player.height >= canvas.height - 96)
-        player.velocity.y = -20;
+          player.velocity.y = -20;
+          playJumpSound();
         break;
       case " ":
         player.attack();
+        playAttackSound();
         break;
     }
   }
@@ -341,11 +349,13 @@ window.addEventListener("keydown", (event) => {
         break;
       case "ArrowUp":
         if (enemy.position.y + enemy.height >= canvas.height - 96)
-        enemy.velocity.y = -20;
+          enemy.velocity.y = -20;
+          playJumpSound();
         break;
       case "ArrowDown":
         //enemy.isAttacking = true;
         enemy.attack();
+        playAttackSound();
         break;
     }
   }
@@ -383,38 +393,40 @@ window.addEventListener("keyup", (event) => {
 
 // 6. Game timers and game over
 
-
 function resetGame() {
-    console.log("Restarting...");
+  console.log("Restarting...");
+  playFightSound();
 
-    // Hiding final score visual representation due to starting new game
-    document.querySelector("#result-container").style.display = "none";
-    
-    // In order to start game as "not dead", we're switching sprite to starting sprite; idle and dead to false
-    aliveAll();
+  // Hiding final score visual representation due to starting new game
+  document.querySelector("#result-container").style.display = "none";
 
-    // Reseting starting positions
-    player.position.x = 200;
-    player.position.y = 0;
-    enemy.position.x = 700;
-    enemy.position.y = 100;
-  
-    // Reseting health and HTML Health bar
-    player.health = 100;
-    enemy.health = 100;
-    document.querySelector("#playerHealth").style.width = "100%";
-    document.querySelector("#enemyHealth").style.width = "100%";
+  // In order to start game as "not dead", we're switching sprite to starting sprite; idle and dead to false
+  aliveAll();
+
+  // Reseting starting positions
+  player.position.x = 200;
+  player.position.y = 0;
+  enemy.position.x = 700;
+  enemy.position.y = 100;
+
+  // Reseting health and HTML Health bar
+  player.health = 100;
+  enemy.health = 100;
+  document.querySelector("#playerHealth").style.width = "100%";
+  document.querySelector("#enemyHealth").style.width = "100%";
+
+  player.update();
+  enemy.update();
+
+  // Reseting timer and HTML timer representation
+  clearTimeout(timerId);
+  timer = 60;
+  document.querySelector("#timer").innerHTML = timer;
+  decreaseTimer();
+}
+
+document.getElementById("btn").addEventListener("click", resetGame);
 
 
-    player.update();
-    enemy.update();
-  
-    // Reseting timer and HTML timer representation
-    clearTimeout(timerId);
-    timer = 60;
-    document.querySelector("#timer").innerHTML = timer;
-    decreaseTimer();
-  }
-  
-  document.getElementById("btn").addEventListener('click', resetGame)
-  
+
+

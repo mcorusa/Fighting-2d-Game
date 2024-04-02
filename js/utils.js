@@ -10,19 +10,19 @@ function rectangularCollision({ rectangle1, rectangle2 }) {
   );
 }
 
-function aliveAll(){
+function aliveAll() {
   player.dead = false;
   player.image = player.sprites.idle.image;
   player.framesMax = player.sprites.idle.framesMax;
   player.framesCurrent = 0;
 
-  player.switchSprite('idle');
+  player.switchSprite("idle");
 
   enemy.dead = false;
   enemy.image = enemy.sprites.idle.image;
   enemy.framesMax = enemy.sprites.idle.framesMax;
   enemy.framesCurrent = 0;
-  enemy.switchSprite('idle');
+  enemy.switchSprite("idle");
 }
 
 function determineWinner({ player, enemy, timerId }) {
@@ -50,3 +50,50 @@ function decreaseTimer() {
     determineWinner({ player, enemy, timerId });
   }
 }
+
+function playFightSound() {
+  const soundFilePath = "sound/fight.mp3";
+  const fightSound = new Audio(soundFilePath);
+  fightSound.currentTime = 0;
+  fightSound.play();
+}
+
+function playAttackSound() {
+  const soundFilePath = "../sound/sword-sound.mp3";
+  const attackSound = new Audio(soundFilePath);
+  attackSound.currentTime = 0;
+  attackSound.play();
+}
+function playJumpSound() {
+  const soundFilePath = "../sound/jump.mp3";
+  const jumpSound = new Audio(soundFilePath);
+  jumpSound.currentTime = 0;
+  jumpSound.play();
+}
+
+
+window.addEventListener('load', function() {
+  const playAudioButton = document.getElementById('play-btn');
+  let audio = null;
+  let isMuted = false;
+  
+  playAudioButton.addEventListener('click', function() {
+      if (!audio) {
+          audio = new Audio('../sound/Paths-of-a-Samurai.mp3');
+          audio.loop = true;
+          audio.currentTime = 0;
+      }
+
+      
+
+      if (isMuted) {
+          audio.play();
+          playAudioButton.textContent = '🔇';
+          isMuted = false;
+      } else {
+          audio.pause();
+          playAudioButton.textContent = '🔈';
+          isMuted = true;
+      }
+  });
+});
