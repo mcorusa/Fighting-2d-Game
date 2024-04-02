@@ -10,9 +10,24 @@ function rectangularCollision({ rectangle1, rectangle2 }) {
   );
 }
 
+function aliveAll(){
+  player.dead = false;
+  player.image = player.sprites.idle.image;
+  player.framesMax = player.sprites.idle.framesMax;
+  player.framesCurrent = 0;
+
+  player.switchSprite('idle');
+
+  enemy.dead = false;
+  enemy.image = enemy.sprites.idle.image;
+  enemy.framesMax = enemy.sprites.idle.framesMax;
+  enemy.framesCurrent = 0;
+  enemy.switchSprite('idle');
+}
+
 function determineWinner({ player, enemy, timerId }) {
   clearTimeout(timerId);
-  document.querySelector("#result").style.display = "flex";
+  document.querySelector("#result-container").style.display = "flex";
   if (player.health === enemy.health) {
     document.querySelector("#result").innerHTML = "Tie";
   } else if (player.health > enemy.health) {

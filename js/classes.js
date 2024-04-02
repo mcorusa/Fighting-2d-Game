@@ -151,6 +151,7 @@ class Fighter extends Sprite {
         this.dead = true;
       return;
     }
+    
 
     //overriding all other animations with the attack animation
     if (
@@ -217,6 +218,14 @@ class Fighter extends Sprite {
           this.framesCurrent = 0;
         }
         break;
+      case "alive":
+        if (this.image !== this.sprites.idle.image) {
+          this.image = this.sprites.idle.image;
+          this.framesMax = this.sprites.idle.framesMax;
+          this.framesCurrent = 0;
+        }
+        break;
+    
     }
   }
 }

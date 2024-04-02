@@ -7,7 +7,6 @@ const c = canvas.getContext("2d");
 canvas.width = 1024;
 canvas.height = 576;
 
-// kad imamo context mozemo koristiti canvas API za crtanje pozadine
 c.fillRect(0, 0, canvas.width, canvas.height);
 
 const gravity = 0.7;
@@ -90,6 +89,7 @@ const player = new Fighter({
     width: 155,
     height: 50,
   },
+  dead : false
 });
 
 const enemy = new Fighter({
@@ -151,6 +151,7 @@ const enemy = new Fighter({
     width: 170,
     height: 50,
   },
+  dead : false
 });
 
 // kad imamo objekte koji ce se pomjerati onda obicno za svojstvo dodamo velocity i gravity (idemo napraviti funkciju animate)
@@ -379,3 +380,39 @@ window.addEventListener("keyup", (event) => {
 // 5. Health bar
 
 // 6. Game timers and game over
+
+
+function resetGame() {
+    console.log("Restarting...");
+
+    // Hiding final score visual representation due to starting new game
+    document.querySelector("#result-container").style.display = "none";
+    
+    // In order to start game as "not dead", we're switching sprite to starting sprite; idle and dead to false
+    aliveAll();
+
+    // Reseting starting positions
+    player.position.x = 200;
+    player.position.y = 0;
+    enemy.position.x = 700;
+    enemy.position.y = 100;
+  
+    // Reseting health and HTML Health bar
+    player.health = 100;
+    enemy.health = 100;
+    document.querySelector("#playerHealth").style.width = "100%";
+    document.querySelector("#enemyHealth").style.width = "100%";
+
+
+    player.update();
+    enemy.update();
+  
+    // Reseting timer and HTML timer representation
+    clearTimeout(timerId);
+    timer = 60;
+    document.querySelector("#timer").innerHTML = timer;
+    decreaseTimer();
+  }
+  
+  document.getElementById("btn").addEventListener('click', resetGame)
+  
