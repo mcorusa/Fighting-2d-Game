@@ -71,29 +71,20 @@ function playJumpSound() {
   jumpSound.play();
 }
 
-
 window.addEventListener('load', function() {
   const playAudioButton = document.getElementById('play-btn');
-  let audio = null;
-  let isMuted = false;
+  const audio = new Audio('../sound/Paths-of-a-Samurai.mp3');
+  let isMuted = true; // Postavljamo na true jer želimo da bude "unmuted" prvi put
   
   playAudioButton.addEventListener('click', function() {
-      if (!audio) {
-          audio = new Audio('../sound/Paths-of-a-Samurai.mp3');
-          audio.loop = true;
-          audio.currentTime = 0;
-      }
-
-      
-
       if (isMuted) {
           audio.play();
           playAudioButton.textContent = '🔇';
-          isMuted = false;
       } else {
           audio.pause();
           playAudioButton.textContent = '🔈';
-          isMuted = true;
       }
+      isMuted = !isMuted;
   });
 });
+

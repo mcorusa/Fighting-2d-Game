@@ -1,4 +1,3 @@
-// parametre konstruktora proslijedjujemo u obliku objekta kako nam poredak svojastva ne bi bio bitan
 class Sprite {
   constructor({
     position,
