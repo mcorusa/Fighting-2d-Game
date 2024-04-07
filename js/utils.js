@@ -10,19 +10,13 @@ function rectangularCollision({ rectangle1, rectangle2 }) {
   );
 }
 
-function aliveAll() {
-  player.dead = false;
-  player.image = player.sprites.idle.image;
-  player.framesMax = player.sprites.idle.framesMax;
-  player.framesCurrent = 0;
 
-  player.switchSprite("idle");
-
-  enemy.dead = false;
-  enemy.image = enemy.sprites.idle.image;
-  enemy.framesMax = enemy.sprites.idle.framesMax;
-  enemy.framesCurrent = 0;
-  enemy.switchSprite("idle");
+function alive(character) {
+  character.dead = false;
+  character.image = character.sprites.idle.image;
+  character.framesMax = character.sprites.idle.framesMax;
+  character.framesCurrent = 0;
+  character.switchSprite("idle");
 }
 
 function determineWinner({ player, enemy, timerId }) {
@@ -50,6 +44,19 @@ function decreaseTimer() {
     determineWinner({ player, enemy, timerId });
   }
 }
+decreaseTimer();
+
+
+//*************************************************************/
+function playerRestrictions(character) {
+  if (character.position.x < 0) {
+    character.position.x = 0;
+  } else if (character.position.x + character.width > canvas.width) {
+    character.position.x = canvas.width - character.width;
+  }
+}
+//*************************************************************/
+
 
 function playFightSound() {
   const soundFilePath = "sound/fight.mp3";
@@ -74,7 +81,7 @@ function playJumpSound() {
 window.addEventListener('load', function() {
   const playAudioButton = document.getElementById('play-btn');
   const audio = new Audio('../sound/Paths-of-a-Samurai.mp3');
-  let isMuted = true; // Postavljamo na true jer želimo da bude "unmuted" prvi put
+  let isMuted = true;
   
   playAudioButton.addEventListener('click', function() {
       if (isMuted) {
@@ -87,4 +94,44 @@ window.addEventListener('load', function() {
       isMuted = !isMuted;
   });
 });
+
+document.getElementById("btn").addEventListener("click", resetGame);
+
+function resetGame() {
+    console.log("Restarting...");
+    playFightSound();
+  
+    // Hiding final score visual representation due to starting new game
+    document.querySelector("#result-container").style.display = "none";
+  
+    // In order to start game as "not dead", we're switching sprite to starting sprite; idle and dead to false
+    alive(player);
+    alive(enemy);
+  
+    // Reseting starting positions
+    player.position.x = 200;
+    player.position.y = 0;
+    enemy.position.x = 700;
+    enemy.position.y = 100;
+  
+    player.naturalDirection = true;
+    enemy.naturalDirection = true;
+  
+    // Reseting health and HTML Health bar
+    player.health = 100;
+    enemy.health = 100;
+    document.querySelector("#playerHealth").style.width = "100%";
+    document.querySelector("#enemyHealth").style.width = "100%";
+  
+    player.update();
+    enemy.update();
+  
+    // Reseting timer and HTML timer representation
+    clearTimeout(timerId);
+    timer = 60;
+    document.querySelector("#timer").innerHTML = timer;
+    decreaseTimer();
+  }
+
+
 
