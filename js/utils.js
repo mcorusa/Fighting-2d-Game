@@ -44,7 +44,7 @@ function decreaseTimer() {
     determineWinner({ player, enemy, timerId });
   }
 }
-decreaseTimer();
+
 
 
 //*************************************************************/

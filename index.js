@@ -226,6 +226,7 @@ const keys = {
     pressed: false,
   },
 };
+decreaseTimer();
 
 function animate() {
   window.requestAnimationFrame(animate);
@@ -276,9 +277,12 @@ function animate() {
     enemy.run();
   }
 
-  if (enemy.velocity.x === 0) {
+  else {
     enemy.idle();
   }
+  // if (enemy.velocity.x === 0) {
+  //   enemy.idle();
+  // }
 
   if (enemy.velocity.y < 0) {
     enemy.jump();
@@ -305,12 +309,10 @@ function animate() {
     });
     console.log("player hits enemy");
   }
-
   // if player misses
   if (player.isAttacking && player.framesCurrent === 4) {
     player.isAttacking = false;
   }
-
 
 // detect for collision & Mack gets hit
   if (
@@ -328,7 +330,6 @@ function animate() {
       width: `${player.health}%`,
     });
     console.log("enemy attack successfull");
-    console.log(player.health)
   }
 
   if (enemy.isAttacking && enemy.framesCurrent === 2) {

@@ -158,12 +158,8 @@ class Fighter extends Sprite {
   }
 
   jump(){
-    if (this.velocity.y < 0) {
       if (this.naturalDirection) this.switchSprite("jump");
       else this.switchSprite("jumpBack");
-    } else if (this.velocity.y > 0) {
-      
-    }
   }
 
   fall(){
@@ -184,7 +180,7 @@ class Fighter extends Sprite {
         this.isAttacking = true;
         this.attackBox.offset.x = 70;
         this.attackBox.width = 125;
-        console.log("Kenji naopaki attack");
+        console.log("Kenji backwards attack");
       }
     }
     else{
@@ -198,14 +194,14 @@ class Fighter extends Sprite {
         this.switchSprite("attack1Back");
         this.isAttacking = true;
         this.attackBox.offset.x = -170; 
-        console.log("mack naopaki attack");
+        console.log("mack backwards attack");
       }
     }
   }
  
 
   takeHit() {
-    console.log("prima udarac")
+    console.log("takes hit")
     this.health -= 10;
     if (this.health <= 0){
       this.naturalDirection ? this.switchSprite("death") : this.switchSprite("deathBack")
@@ -218,16 +214,24 @@ class Fighter extends Sprite {
   
 
   switchSprite(sprite) {
-    if (this.image === this.sprites.death.image || this.image === this.sprites.deathBack.image ) {
+
+    // Don't switch sprite if player is dead
+    if (this.image === this.sprites.death.image || this.image === this.sprites.deathBack.image) {
       if (this.framesCurrent === this.sprites.death.framesMax - 1 ||  this.framesCurrent === this.sprites.deathBack.framesMax - 1)
         this.dead = true;
       return;
     }
 
-    if (this.isAttacking) {
-      return; // Don't switch sprite if attacking animation is ongoing
+    // if (this.isAttacking) {
+    //   return; // Don't switch sprite if attacking animation is ongoing
+    // }
+
+    if (
+      this.sprite === "takeHit" || this.sprite === "takeHitBack" &&
+      this.framesCurrent < this.sprites.takeHit.framesMax-1 // Assuming framesMax is known
+    ) {
+      return;
     }
-    
     //overriding all other animations with the attack animation
     if (
       this.image === this.sprites.attack1.image &&
@@ -329,6 +333,9 @@ class Fighter extends Sprite {
           this.image = this.sprites.takeHit.image;
           this.framesMax = this.sprites.takeHit.framesMax;
           this.framesCurrent = 0;
+          // if (this.framesCurrent === this.sprites.takeHit.framesMax) {
+          //   this.isAttacking = false;
+          // }
           console.log(`${this} takes hit`)
         }
         break;
@@ -337,6 +344,9 @@ class Fighter extends Sprite {
           this.image = this.sprites.takeHitBack.image;
           this.framesMax = this.sprites.takeHitBack.framesMax;
           this.framesCurrent = 0;
+          // if (this.framesCurrent === this.sprites.takeHitBack.framesMax) {
+          //      this.isAttacking = false;
+          // }
           console.log(`${this} takes backwards hit`)
         }
         break;
